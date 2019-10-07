@@ -1,6 +1,5 @@
-This is a heading
+Coding practices snippets
 ==========
-This is a sub heading
+algorithm (sub folder)
 ----------
-*This is highlight*...
-Have a nice day
+Code around *Data Structure and Algorithm*.
