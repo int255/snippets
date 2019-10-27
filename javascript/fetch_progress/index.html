@@ -1,0 +1,55 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script>
+
+var config = {
+	href: '',
+	isDebug : false
+}
+
+function fetch(url)
+{
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = "arraybuffer";
+    xhr.open("GET", url, true);
+    xhr.onload = function (xhrEvent) {
+        var arrayBuffer = xhr.response;
+
+        // if you want to access the bytes:
+        var byteArray = new Uint8Array(arrayBuffer);
+        console.log('URL fetched: ' + url + ': ' + byteArray.length + ' bytes'); 
+        //onFetchedCallback(url, true);
+    };
+	xhr.onprogress = function(event) {
+		console.log('fetch loaded: ' + event.loaded + ' / ' + event.total);
+		var percentage = event.loaded/event.total * 100;
+		$("#progress").html(' ' + percentage + '% loaded');
+	};
+    xhr.send();
+}
+
+$(function (){
+	config.href=$(location).attr('href');
+	config.isDebug=(-1!=config.href.indexOf('debug=true'));
+	console.log(config);
+	$("#progress").html('ready');
+});
+
+function startDownload()
+{
+	var url = $("#url").val();
+	alert('download:' + url);
+	fetch(url);
+}
+
+	</script>
+	</head>
+<body>
+	<input id="url" type="text" size="100" placeholder="paste URL here" value="http://127.0.0.1:8000/test/bindata"/>
+	<button id="go" type="button" onclick="startDownload();">download</button>
+	<div id="progress">
+	</div>
+</body
+</html>
